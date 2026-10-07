@@ -1,0 +1,123 @@
+:root {
+  --board: #12332b;
+  --board-light: #1b4a3e;
+  --chalk: #f2efe6;
+  --chalk-dim: #b9c7bf;
+  --sun: #f6c744;
+  --coral: #ef6f5e;
+  --win: #7be0a1;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  background: var(--board);
+  color: var(--chalk);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.app { width: 100%; max-width: 560px; text-align: center; }
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+h1 { font-size: clamp(2rem, 8vw, 3rem); font-weight: 700; color: var(--sun); line-height: 1.1; }
+h2 { font-size: 1.25rem; font-weight: 500; }
+.subtitle { margin: 10px 0 28px; color: var(--chalk-dim); }
+
+/* Menu */
+.menu { display: grid; gap: 14px; }
+
+.mode-btn {
+  font: inherit;
+  color: inherit;
+  background: var(--board-light);
+  border: 2px solid var(--chalk-dim);
+  border-radius: 18px;
+  padding: 20px;
+  cursor: pointer;
+  display: grid;
+  gap: 4px;
+  transition: transform .15s, border-color .15s;
+}
+.mode-btn:hover:not(:disabled) { transform: translateY(-3px); border-color: var(--sun); }
+.mode-btn:disabled { opacity: .5; cursor: not-allowed; border-style: dashed; }
+.mode-icon { font-size: 2.2rem; }
+.mode-title { font-size: 1.4rem; font-weight: 700; }
+.mode-desc { color: var(--chalk-dim); font-size: .95rem; }
+
+/* Game header */
+.game-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.link-btn {
+  font: inherit; font-size: .95rem; color: var(--chalk-dim);
+  background: none; border: none; cursor: pointer; padding: 6px 4px;
+}
+.link-btn:hover { color: var(--sun); }
+
+/* Scoreboard */
+.scoreboard {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 22px;
+}
+.score { background: var(--board-light); border-radius: 14px; padding: 10px; }
+.score-label { display: block; font-size: .85rem; color: var(--chalk-dim); }
+.score-value { font-size: 2rem; font-weight: 700; }
+
+/* Arena */
+.arena { display: flex; align-items: center; justify-content: center; gap: 18px; margin-bottom: 14px; }
+.hand-box { display: grid; gap: 6px; justify-items: center; }
+.hand {
+  width: clamp(90px, 26vw, 130px); aspect-ratio: 1;
+  display: grid; place-items: center;
+  font-size: clamp(3rem, 12vw, 4.5rem);
+  background: var(--board-light);
+  border: 3px solid var(--chalk-dim);
+  border-radius: 50%;
+}
+.hand-name { color: var(--chalk-dim); font-size: .95rem; }
+.vs { font-weight: 700; color: var(--sun); }
+
+.hand.shake { animation: shake .5s ease-in-out; }
+.hand.winner { border-color: var(--win); }
+.hand.loser { border-color: var(--coral); opacity: .7; }
+
+@keyframes shake {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  25% { transform: translateY(-14px) rotate(-8deg); }
+  75% { transform: translateY(-14px) rotate(8deg); }
+}
+
+/* Result */
+.result { font-size: 1.5rem; font-weight: 700; min-height: 2.2rem; margin-bottom: 18px; }
+.result.win { color: var(--win); }
+.result.lose { color: var(--coral); }
+.result.draw { color: var(--sun); }
+
+/* Choices */
+.choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.choice {
+  font: inherit; font-weight: 500; color: inherit;
+  background: var(--chalk); color: var(--board);
+  border: none; border-radius: 16px;
+  padding: 14px 8px; cursor: pointer;
+  display: grid; gap: 4px;
+  transition: transform .12s, background .12s;
+}
+.choice span { font-size: 2.2rem; }
+.choice:hover:not(:disabled) { transform: translateY(-3px); background: var(--sun); }
+.choice:active:not(:disabled) { transform: scale(.96); }
+.choice:disabled { opacity: .6; cursor: wait; }
+
+.hint { margin-top: 16px; font-size: .85rem; color: var(--chalk-dim); }
+
+button:focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hand.shake { animation: none; }
+  * { transition: none !important; }
+}
